@@ -11,11 +11,10 @@ const userRoutes =  require("./routes/userRoutes");
 const apiPort = 3000;
 
 // CONNECTS TO MONGODB DATABASE
-mongoose.connect(
-    'mongodb+srv://abomber:Edreed20%21@cluster0.djx33.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGO_DB,
     {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        //useNewUrlParser: true,
+        //useUnifiedTopology: true
     }
 );
 
