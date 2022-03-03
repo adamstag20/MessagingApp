@@ -1,8 +1,20 @@
 const asyncHandler = require("express-async-handler");
-const res = require("express/lib/response");
 const User = require("../models");
 const generateToken = require("../routes/generateToken");
 
+
+const allUsers = asyncHandler(async (req,res)=> {
+
+    const keyword = req.query.search
+    // looks for keyword (username) in database if not found show nothing
+    ? { username : {$regex: req.query.search, $options: "i"}} : {}; 
+
+    // Find users who match keyword but not the currently logged in user
+    const users = await User.find(keyword).find({ _id: { $ne : req._id} });
+
+    res.send(users);
+
+});
 //////////////////////////////////////////////////////////////////
 // Process to register a user to the mongoDB database
 const registerUser = asyncHandler( async(req, res) => {
@@ -52,6 +64,7 @@ const authUser = asyncHandler(async(req,res) => {
         res.json ({
             _id: user._id,
             username : user.username,
+            token: generateToken(user._id),
 
         });
     } else {
@@ -61,5 +74,8 @@ const authUser = asyncHandler(async(req,res) => {
 
 });
 
+///////////////////////////////////////////////////////////////////
+
+
 //////////////////////////////////////////////////////////////////
-module.exports = { registerUser, authUser };
+module.exports = { registerUser, authUser, allUsers };

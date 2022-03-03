@@ -6,9 +6,11 @@ const app = express();
 const chats = require("./data");
 const userModel = require("./models");
 const userRoutes =  require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 
-const apiPort = 3000;
+
+const apiPort = 5000;
 
 // CONNECTS TO MONGODB DATABASE
 mongoose.connect(process.env.MONGO_DB,
@@ -26,13 +28,11 @@ db.once("open", function () {
 
 app.use(express.json()); //to accept json data
 
-app.get("/", (request, response) => {
-    response.send("API RUNNING");
-  
-  });
+
 
 app.post("/login", userRoutes); //calls login route 
-
+app.get("/chat", userRoutes);
+app.post("/api/chat", chatRoutes);
 //app.user(notFound);
 //app.user(errorHandler);
 
