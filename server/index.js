@@ -7,6 +7,7 @@ const chats = require("./data");
 const userModel = require("./models");
 const userRoutes =  require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 
 
@@ -33,6 +34,11 @@ app.use(express.json()); //to accept json data
 app.post("/login", userRoutes); //calls login route 
 app.get("/chat", userRoutes);
 app.post("/api/chat", chatRoutes);
+app.get("/api/chat", chatRoutes);
+app.post("/group", chatRoutes);
+app.get("/users",userRoutes);
+app.use("/api/messages", messageRoutes);
+
 //app.user(notFound);
 //app.user(errorHandler);
 

@@ -9,7 +9,7 @@ router.route('/login').post(authUser);
 
 // Used for Chatpage routing
 
-router.route('/chat').get(allUsers);
+router.route('/users').get(allUsers);
 
 
 
